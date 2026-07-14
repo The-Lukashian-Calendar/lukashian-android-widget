@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="org.lukashian.LukashianWidgetConfigureActivity"
+    android:widgetFeatures="reconfigurable"
+    android:description="@string/app_description"
+    android:initialKeyguardLayout="@layout/lukashian_widget"
+    android:initialLayout="@layout/lukashian_widget"
+    android:minWidth="110dp"
+    android:minHeight="40dp"
+    android:targetCellWidth="2"
+    android:targetCellHeight="1"
+    android:previewImage="@drawable/example_appwidget_preview"
+    android:previewLayout="@layout/lukashian_widget"
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="1000"
+    android:widgetCategory="home_screen|keyguard" />

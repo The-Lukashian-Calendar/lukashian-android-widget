@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Lukashian Calendar Widget</string>
+    <string name="app_description">Displays the Earth or Mars instance of the Lukashian Calendar</string>
+
+    <string name="configure">Configure Calendar</string>
+    <string name="save">SAVE SETTINGS</string>
+    <string name="configure_instance">Choose instance</string>
+    <string name="configure_indicator">Show instance indicator</string>
+
+    <string name="configure_indicator_explanation">
+        The instance indicator is useful when you have multiple instances of the calendar widget on your screen.
+        If the text looks too small as a result, consider resizing the widget horizontally.
+    </string>
+
+    <string name="earthInstance">Earth</string>
+    <string name="marsInstance">Mars</string>
+    <string name="defaultInstance">Earth</string>
+</resources>
