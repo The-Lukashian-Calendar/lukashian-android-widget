@@ -43,14 +43,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:textSize="16sp"
-                    android:text="@string/earthInstance" />
+                    android:text="@string/earth" />
 
                 <RadioButton
                     android:id="@+id/radioButtonMars"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:textSize="16sp"
-                    android:text="@string/marsInstance" />
+                    android:text="@string/mars" />
 
             </RadioGroup>
 

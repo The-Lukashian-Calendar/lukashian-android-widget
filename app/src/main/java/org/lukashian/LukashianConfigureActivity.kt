@@ -1,37 +1,43 @@
 package org.lukashian
 
 import android.appwidget.AppWidgetManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.edit
+import org.lukashian.data.DEFAULT_INSTANCE
+import org.lukashian.data.loadIndicator
+import org.lukashian.data.loadInstance
+import org.lukashian.data.saveIndicator
+import org.lukashian.data.saveInstance
 import org.lukashian.databinding.LukashianWidgetConfigureBinding
+import org.lukashian.model.Instance.EARTH
+import org.lukashian.model.Instance.MARS
+import org.lukashian.rendering.updateAppWidget
 
-class LukashianWidgetConfigureActivity : AppCompatActivity() {
+class LukashianConfigureActivity : AppCompatActivity() {
 
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private lateinit var binding: LukashianWidgetConfigureBinding
 
     private var instanceListener = RadioGroup.OnCheckedChangeListener { _, checkedId ->
         val chosenInstance = when (checkedId) {
-            R.id.radioButtonEarth -> this.resources.getString(R.string.earthInstance)
-            R.id.radioButtonMars -> this.resources.getString(R.string.marsInstance)
-            else -> this.resources.getString(R.string.defaultInstance)
+            R.id.radioButtonEarth -> EARTH
+            R.id.radioButtonMars -> MARS
+            else -> DEFAULT_INSTANCE
         }
 
         println("Calendar Instance chosen: $chosenInstance")
-        saveCalendarInstance(this, appWidgetId, chosenInstance)
+        this.saveInstance(appWidgetId, chosenInstance)
 
         completeAction()
     }
 
     private var indicatorListener = CompoundButton.OnCheckedChangeListener { _, checked ->
         println("Indicator chosen: $checked")
-        saveCalendarIndicator(this, appWidgetId, checked)
+        this.saveIndicator(appWidgetId, checked)
 
         completeAction()
     }
@@ -47,7 +53,7 @@ class LukashianWidgetConfigureActivity : AppCompatActivity() {
         setResult(RESULT_OK, resultValue)
     }
 
-    public override fun onCreate(icicle: Bundle?) {
+    override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
 
         println("Configure Activity Created")
@@ -86,16 +92,15 @@ class LukashianWidgetConfigureActivity : AppCompatActivity() {
         }
 
         //Set current values in input components
-        val calendarInstance = loadCalendarInstance(this@LukashianWidgetConfigureActivity, appWidgetId)
-        println("Current Calendar Instance: $calendarInstance")
+        val instance = this.loadInstance(appWidgetId)
+        println("Current Calendar Instance: $instance")
 
-        val indicator = loadCalendarIndicator(this@LukashianWidgetConfigureActivity, appWidgetId)
+        val indicator = this.loadIndicator(appWidgetId)
         println("Current Calendar Indicator: $indicator")
 
-        when (calendarInstance) {
-            getString(R.string.earthInstance) -> binding.radioGroup.check(R.id.radioButtonEarth)
-            getString(R.string.marsInstance) -> binding.radioGroup.check(R.id.radioButtonMars)
-            else -> binding.radioGroup.clearCheck()
+        when (instance) {
+            EARTH -> binding.radioGroup.check(R.id.radioButtonEarth)
+            MARS -> binding.radioGroup.check(R.id.radioButtonMars)
         }
         binding.radioGroup.setOnCheckedChangeListener(instanceListener)
 
@@ -110,42 +115,5 @@ class LukashianWidgetConfigureActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-}
-
-private const val WIDGET_PREFS_KEY = "org.lukashian.LukashianWidget"
-private const val INSTANCE_PREFIX = "calendar_instance_"
-private const val INDICATOR_PREFIX = "calendar_indicator_"
-
-internal fun saveCalendarInstance(context: Context, appWidgetId: Int, text: String) {
-    context.getSharedPreferences(WIDGET_PREFS_KEY, 0).edit {
-        putString(INSTANCE_PREFIX + appWidgetId, text)
-    }
-}
-
-internal fun loadCalendarInstance(context: Context, appWidgetId: Int): String {
-    return context.getSharedPreferences(WIDGET_PREFS_KEY, 0).getString(INSTANCE_PREFIX + appWidgetId, null) ?:
-           context.getString(R.string.defaultInstance)
-}
-
-internal fun deleteCalendarInstance(context: Context, appWidgetId: Int) {
-    context.getSharedPreferences(WIDGET_PREFS_KEY, 0).edit {
-        remove(INSTANCE_PREFIX + appWidgetId)
-    }
-}
-
-internal fun saveCalendarIndicator(context: Context, appWidgetId: Int, indicator: Boolean) {
-    context.getSharedPreferences(WIDGET_PREFS_KEY, 0).edit {
-        putBoolean(INDICATOR_PREFIX + appWidgetId, indicator)
-    }
-}
-
-internal fun loadCalendarIndicator(context: Context, appWidgetId: Int): Boolean {
-    return context.getSharedPreferences(WIDGET_PREFS_KEY, 0).getBoolean(INDICATOR_PREFIX + appWidgetId, false)
-}
-
-internal fun deleteCalendarIndicator(context: Context, appWidgetId: Int) {
-    context.getSharedPreferences(WIDGET_PREFS_KEY, 0).edit {
-        remove(INDICATOR_PREFIX + appWidgetId)
     }
 }

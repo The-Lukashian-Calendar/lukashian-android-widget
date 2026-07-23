@@ -12,7 +12,6 @@
         If the text looks too small as a result, consider resizing the widget horizontally.
     </string>
 
-    <string name="earthInstance">Earth</string>
-    <string name="marsInstance">Mars</string>
-    <string name="defaultInstance">Earth</string>
+    <string name="earth">Earth</string>
+    <string name="mars">Mars</string>
 </resources>
