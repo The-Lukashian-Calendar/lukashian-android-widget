@@ -13,17 +13,23 @@ private val handler = Handler(Looper.getMainLooper())
 private var renderTick: Runnable? = null
 
 internal fun startRenderLoop(context: Context) {
+    println("Starting render loop")
     if (renderTick != null) return
 
+    println("Instantiating renderTick")
     renderTick = object : Runnable {
         override fun run() {
+            println("Tick")
+
             val appWidgetManager = AppWidgetManager.getInstance(context.applicationContext)
             val thisWidget = ComponentName(context.applicationContext, LukashianWidget::class.java)
             val allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 
+            println("Number of widget ids: ${allWidgetIds.size}")
             if (allWidgetIds.isNotEmpty()) {
                 allWidgetIds.forEach { updateAppWidget(context, appWidgetManager, it) }
-                handler.postDelayed(this, UPDATE_INTERVAL)
+                val postResult = handler.postDelayed(this, UPDATE_INTERVAL)
+                println("Next tick scheduled: $postResult")
             }
         }
     }
@@ -31,6 +37,7 @@ internal fun startRenderLoop(context: Context) {
 }
 
 internal fun stopRenderLoop() {
+    println("Stopping render loop")
     renderTick?.let { handler.removeCallbacks(it) }
     renderTick = null
 }

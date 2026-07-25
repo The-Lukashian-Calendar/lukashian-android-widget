@@ -14,6 +14,8 @@ internal fun updateAppWidget(
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
+    println("Updating Widget $appWidgetId")
+    
     val instance = context.loadInstance(appWidgetId)
     val indicator = context.loadIndicator(appWidgetId)
     val calendarInfo = context.loadCalendarInfo(instance) //TODO take into account null

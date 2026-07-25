@@ -8,6 +8,7 @@ import org.lukashian.model.Instance.EARTH
 import org.lukashian.model.Instance.MARS
 import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 internal interface LukashianApi {
@@ -23,6 +24,7 @@ private const val BASE_URL = "https://www.lukashian.org/api/watchinfo/"
 private val lukashianClient: LukashianApi by lazy {
     Retrofit.Builder()
         .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(LukashianApi::class.java)
 }
@@ -30,20 +32,26 @@ private val lukashianClient: LukashianApi by lazy {
 internal class CalendarInfoUpdater(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
         return try {
+            println("Retrieving Earth Calendar Info")
             val earthInfo = lukashianClient.getEarthCalendarInfo()
+
+            println("Retrieving Mars Calendar Info")
             val marsInfo = lukashianClient.getMarsCalendarInfo()
 
             if (
                 earthInfo.isSuccessful && earthInfo.body() != null &&
                 marsInfo.isSuccessful && marsInfo.body() != null
             ) {
+                println("Saving Calendar Info")
                 applicationContext.saveCalendarInfo(EARTH, earthInfo.body()!!)
                 applicationContext.saveCalendarInfo(MARS, marsInfo.body()!!)
                 Result.success()
             } else {
+                println("Retrieval failed.\nEarth result: ${earthInfo.body()}\nMars result: ${marsInfo.body()}")
                 Result.failure()
             }
         } catch (e: Exception) {
+            println("Error during retrieval")
             e.printStackTrace()
             Result.retry()
         }

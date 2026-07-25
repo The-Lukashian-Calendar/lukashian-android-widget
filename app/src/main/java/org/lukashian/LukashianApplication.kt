@@ -13,7 +13,6 @@ import org.lukashian.rendering.stopRenderLoop
 
 class LukashianApplication : Application() {
 
-    //TODO: Logging everywhere
     //TODO: Simulate enabled, deleted, disabled cycle and see full logging of it
     //TODO: Simulate periodic updates with screen on, screen off, reboot, 60 second auto update
 
@@ -23,6 +22,7 @@ class LukashianApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        println("Application Created")
 
         val filter = IntentFilter().apply {
             addAction(ACTION_SCREEN_ON)
@@ -42,9 +42,11 @@ internal class ScreenReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
             ACTION_SCREEN_ON -> {
+                println("Screen On received")
                 startRenderLoop(context)
             }
             ACTION_SCREEN_OFF -> {
+                println("Screen Off received")
                 stopRenderLoop()
             }
         }

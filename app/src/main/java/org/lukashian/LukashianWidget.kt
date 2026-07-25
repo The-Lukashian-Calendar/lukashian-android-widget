@@ -81,6 +81,7 @@ class LukashianWidget : AppWidgetProvider() {
 
         when (intent.action) {
             Intent.ACTION_BOOT_COMPLETED -> {
+                println("Boot completed received")
                 startRenderLoop(context)
             }
         }
