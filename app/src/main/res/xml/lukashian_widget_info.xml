@@ -12,7 +12,7 @@
     android:previewImage="@drawable/example_appwidget_preview"
     android:previewLayout="@layout/lukashian_widget"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="60000"
+    android:updatePeriodMillis="1800000"
     android:widgetCategory="home_screen|keyguard" />
 
-<!-- updatePeriodMillis set to 60 seconds so that, even when other starters of the render loop are broken, this will still restart it -->
+<!-- updatePeriodMillis set to 30 minutes so that, even when other starters of the render loop are broken, this will still restart it -->

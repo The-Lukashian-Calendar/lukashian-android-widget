@@ -7,22 +7,17 @@ import android.content.Intent
 import android.content.Intent.ACTION_SCREEN_OFF
 import android.content.Intent.ACTION_SCREEN_ON
 import android.content.IntentFilter
+import android.util.Log
 import androidx.core.content.ContextCompat
-import org.lukashian.rendering.startRenderLoop
-import org.lukashian.rendering.stopRenderLoop
 
 class LukashianApplication : Application() {
 
-    //TODO: Simulate enabled, deleted, disabled cycle and see full logging of it
-    //TODO: Simulate periodic updates with screen on, screen off, reboot, 60 second auto update
-
-    //TODO: Calendar logic to get the actual numbers, then also test http loading
     //TODO: Example image + launcher icons
     //TODO: Put Android URL instead of Garmin URL in README and repo URL
 
     override fun onCreate() {
         super.onCreate()
-        println("Application Created")
+        Log.d("LukashianConfigureActivity", "Application Created")
 
         val filter = IntentFilter().apply {
             addAction(ACTION_SCREEN_ON)
@@ -42,12 +37,12 @@ internal class ScreenReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
             ACTION_SCREEN_ON -> {
-                println("Screen On received")
-                startRenderLoop(context)
+                Log.d("LukashianConfigureActivity", "Screen On received")
+                refreshUpdateSchedule(context, runImmediately = true)
             }
             ACTION_SCREEN_OFF -> {
-                println("Screen Off received")
-                stopRenderLoop()
+                Log.d("LukashianConfigureActivity", "Screen Off received")
+                refreshUpdateSchedule(context, runImmediately = true)
             }
         }
     }

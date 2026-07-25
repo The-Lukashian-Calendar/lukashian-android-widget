@@ -3,6 +3,7 @@ package org.lukashian
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.RadioGroup
@@ -29,14 +30,14 @@ class LukashianConfigureActivity : AppCompatActivity() {
             else -> DEFAULT_INSTANCE
         }
 
-        println("Calendar Instance chosen: $chosenInstance")
+        Log.d("LukashianConfigureActivity", "Calendar Instance chosen: $chosenInstance")
         this.saveInstance(appWidgetId, chosenInstance)
 
         completeAction()
     }
 
     private var indicatorListener = CompoundButton.OnCheckedChangeListener { _, checked ->
-        println("Indicator chosen: $checked")
+        Log.d("LukashianConfigureActivity", "Indicator chosen: $checked")
         this.saveIndicator(appWidgetId, checked)
 
         completeAction()
@@ -56,7 +57,7 @@ class LukashianConfigureActivity : AppCompatActivity() {
     override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
 
-        println("Configure Activity Created")
+        Log.d("LukashianConfigureActivity", "Configure Activity Created")
 
         // Set the result to CANCELED.  This will cause the widget host to cancel
         // out of the widget placement if the user presses the back button.
@@ -86,17 +87,17 @@ class LukashianConfigureActivity : AppCompatActivity() {
 
         // Configure the save button
         findViewById<Button>(R.id.saveButton).setOnClickListener {
-            println("Configuration saved")
+            Log.d("LukashianConfigureActivity", "Configuration saved")
             completeAction()
             finish()
         }
 
         //Set current values in input components
         val instance = this.loadInstance(appWidgetId)
-        println("Current Calendar Instance: $instance")
+        Log.d("LukashianConfigureActivity", "Current Calendar Instance: $instance")
 
         val indicator = this.loadIndicator(appWidgetId)
-        println("Current Calendar Indicator: $indicator")
+        Log.d("LukashianConfigureActivity", "Current Calendar Indicator: $indicator")
 
         when (instance) {
             EARTH -> binding.radioGroup.check(R.id.radioButtonEarth)
