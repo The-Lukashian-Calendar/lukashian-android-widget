@@ -81,7 +81,7 @@ internal fun updateAppWidget(
 //        Log.d("WidgetRenderer", "day: $day")
 //        Log.d("WidgetRenderer", "year: $year")
 
-        val beepsString = String.format("%.4g", proportionPassed)
+        val beepsString = String.format("%04d", proportionPassed.toInt())
         val dayYearString = "$day - $year"
         val instanceString = if (indicator) "  (${instance.name.lowercase().replaceFirstChar { it.titlecase() }})" else ""
 

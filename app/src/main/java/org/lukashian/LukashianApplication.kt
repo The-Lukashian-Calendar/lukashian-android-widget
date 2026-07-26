@@ -12,8 +12,9 @@ import androidx.core.content.ContextCompat
 
 class LukashianApplication : Application() {
 
-    //TODO: Example image + launcher icons
-    //TODO: Put Android URL instead of Garmin URL in README and repo URL
+    //TODO: Test 5, 10, sideload
+    //TODO: Put Android URL instead of Garmin URL in README
+    //TODO: Put Android URL as repo URL
 
     override fun onCreate() {
         super.onCreate()
