@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Lukashian Calendar</string>
-    <string name="app_description">Displays the current time, day and year, according to the Earth or Mars instance of the Lukashian Calendar</string>
+    <string name="app_description">Displays the Earth or Mars instance of the Lukashian Calendar</string>
 
     <string name="configure">Configure Calendar</string>
     <string name="save">SAVE SETTINGS</string>
@@ -10,6 +10,11 @@
     <string name="configure_indicator_explanation">
         The instance indicator is useful when you have multiple instances of the calendar widget on your screen.
         If the text looks too small as a result, consider resizing the widget horizontally.
+    </string>
+
+    <string name="update_limit_explanation">
+        Please note: On some devices, there is a limit on how often a widget can update itself on the screen.
+        This means that your Lukashian clock might run a few beeps behind.
     </string>
 
     <string name="earth">Earth</string>

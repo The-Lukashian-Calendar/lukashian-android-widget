@@ -20,13 +20,13 @@ class LukashianWidget : AppWidgetProvider() {
 
     //When first widget is added
     override fun onEnabled(context: Context) {
-        Log.d("LukashianConfigureActivity", "Widget enabled")
+        Log.d("LukashianWidget", "Widget enabled")
         scheduleCalendarInfoUpdate(context)
     }
 
     //When one or more instances of a widget need updating
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        Log.d("LukashianConfigureActivity", "Widgets ${appWidgetIds.contentToString()} updating")
+        Log.d("LukashianWidget", "Widgets ${appWidgetIds.contentToString()} updating")
 
         appWidgetIds.forEach { appWidgetId ->
             updateAppWidget(context, appWidgetManager, appWidgetId)
@@ -37,7 +37,7 @@ class LukashianWidget : AppWidgetProvider() {
     //When user deletes one or more instances of a widget
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         for (appWidgetId in appWidgetIds) {
-            Log.d("LukashianConfigureActivity", "Widget $appWidgetId deleted")
+            Log.d("LukashianWidget", "Widget $appWidgetId deleted")
             context.deleteWidgetData(appWidgetId)
         }
         refreshUpdateSchedule(context, runImmediately = true)
@@ -45,30 +45,19 @@ class LukashianWidget : AppWidgetProvider() {
 
     //When last widget is deleted
     override fun onDisabled(context: Context) {
-        Log.d("LukashianConfigureActivity", "Widget disabled")
+        Log.d("LukashianWidget", "Widget disabled")
 
         context.deleteCalendarInfo(Instance.EARTH)
         context.deleteCalendarInfo(Instance.MARS)
 
         WorkManager.getInstance(context).cancelAllWorkByTag("periodicUpdate")
     }
-
-    override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
-
-        when (intent.action) {
-            Intent.ACTION_BOOT_COMPLETED -> {
-                Log.d("LukashianConfigureActivity", "Boot completed received")
-                refreshUpdateSchedule(context, runImmediately = true)
-            }
-        }
-    }
 }
 
 private const val UPDATE_INTERVAL_SECONDS = 4L
 
 internal fun refreshUpdateSchedule(context: Context, runImmediately: Boolean) {
-    Log.d("LukashianConfigureActivity", "Refreshing Update Schedule")
+    Log.d("LukashianWidget", "Refreshing Update Schedule")
 
     if (getActiveWidgetIds(context).isNotEmpty()) {
         val nextUpdate = if (runImmediately) {
