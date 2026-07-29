@@ -14,7 +14,7 @@
 
     <string name="update_limit_explanation">
         Please note: On some devices, there is a limit on how often a widget can update itself on the screen.
-        This means that your Lukashian clock might run a few beeps behind.
+        As a result, beeps might update in a slightly irregular pattern.
     </string>
 
     <string name="earth">Earth</string>
