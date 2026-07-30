@@ -1,22 +1,22 @@
-package org.lukashian
+package org.lukashian.clockwidget
 
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
-import org.lukashian.data.DEFAULT_INSTANCE
-import org.lukashian.data.loadIndicator
-import org.lukashian.data.loadInstance
-import org.lukashian.data.saveIndicator
-import org.lukashian.data.saveInstance
-import org.lukashian.databinding.LukashianWidgetConfigureBinding
-import org.lukashian.model.Instance.EARTH
-import org.lukashian.model.Instance.MARS
-import org.lukashian.rendering.updateAppWidget
+import org.lukashian.clockwidget.data.DEFAULT_INSTANCE
+import org.lukashian.clockwidget.data.loadIndicator
+import org.lukashian.clockwidget.data.loadInstance
+import org.lukashian.clockwidget.data.saveIndicator
+import org.lukashian.clockwidget.data.saveInstance
+import org.lukashian.clockwidget.databinding.LukashianWidgetConfigureBinding
+import org.lukashian.clockwidget.model.Instance.EARTH
+import org.lukashian.clockwidget.model.Instance.MARS
+import org.lukashian.clockwidget.rendering.updateAppWidget
 
 class LukashianConfigureActivity : AppCompatActivity() {
 
@@ -30,14 +30,14 @@ class LukashianConfigureActivity : AppCompatActivity() {
             else -> DEFAULT_INSTANCE
         }
 
-        Log.d("LukashianConfigureActivity", "Calendar Instance chosen: $chosenInstance")
+//        Log.d("LukashianConfigureActivity", "Calendar Instance chosen: $chosenInstance")
         this.saveInstance(appWidgetId, chosenInstance)
 
         completeAction()
     }
 
     private var indicatorListener = CompoundButton.OnCheckedChangeListener { _, checked ->
-        Log.d("LukashianConfigureActivity", "Indicator chosen: $checked")
+//        Log.d("LukashianConfigureActivity", "Indicator chosen: $checked")
         this.saveIndicator(appWidgetId, checked)
 
         completeAction()
@@ -57,7 +57,7 @@ class LukashianConfigureActivity : AppCompatActivity() {
     override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
 
-        Log.d("LukashianConfigureActivity", "Configure Activity Created")
+//        Log.d("LukashianConfigureActivity", "Configure Activity Created")
 
         // Set the result to CANCELED.  This will cause the widget host to cancel
         // out of the widget placement if the user presses the back button.
@@ -87,17 +87,17 @@ class LukashianConfigureActivity : AppCompatActivity() {
 
         // Configure the save button
         findViewById<Button>(R.id.saveButton).setOnClickListener {
-            Log.d("LukashianConfigureActivity", "Configuration saved")
+//            Log.d("LukashianConfigureActivity", "Configuration saved")
             completeAction()
             finish()
         }
 
         //Set current values in input components
         val instance = this.loadInstance(appWidgetId)
-        Log.d("LukashianConfigureActivity", "Current Calendar Instance: $instance")
+//        Log.d("LukashianConfigureActivity", "Current Calendar Instance: $instance")
 
         val indicator = this.loadIndicator(appWidgetId)
-        Log.d("LukashianConfigureActivity", "Current Calendar Indicator: $indicator")
+//        Log.d("LukashianConfigureActivity", "Current Calendar Indicator: $indicator")
 
         when (instance) {
             EARTH -> binding.radioGroup.check(R.id.radioButtonEarth)
@@ -109,7 +109,7 @@ class LukashianConfigureActivity : AppCompatActivity() {
         binding.switchIndicator.setOnCheckedChangeListener(indicatorListener)
     }
 
-    override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             // Trigger the same cancel/back logic you use for the system back button
             onBackPressedDispatcher.onBackPressed()

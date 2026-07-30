@@ -1,4 +1,4 @@
-package org.lukashian
+package org.lukashian.clockwidget
 
 import android.app.Application
 import android.content.BroadcastReceiver
@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_SCREEN_ON
 import android.content.IntentFilter
-import android.util.Log
 import androidx.core.content.ContextCompat
 
 class LukashianApplication : Application() {
@@ -16,7 +15,7 @@ class LukashianApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d("LukashianApplication", "Application Created")
+//        Log.d("LukashianApplication", "Application Created")
 
         val filter = IntentFilter().apply {
             addAction(ACTION_SCREEN_ON)
@@ -35,7 +34,7 @@ internal class ScreenReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
             ACTION_SCREEN_ON -> {
-                Log.d("LukashianConfigureActivity", "Screen On received")
+//                Log.d("LukashianConfigureActivity", "Screen On received")
                 refreshUpdateSchedule(context, runImmediately = true)
             }
         }

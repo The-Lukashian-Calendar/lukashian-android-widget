@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "org.lukashian"
+    namespace = "org.lukashian.clockwidget"
     compileSdk {
         version = release(37) {
             minorApiLevel = 0
@@ -11,7 +11,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "org.lukashian"
+        applicationId = "org.lukashian.clockwidget"
         minSdk = 26
         targetSdk = 37
         versionCode = 1
@@ -22,8 +22,9 @@ android {
 
     buildTypes {
         release {
+            isDebuggable = false
             optimization {
-                enable = false
+                enable = true
             }
         }
     }

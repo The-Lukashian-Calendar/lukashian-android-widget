@@ -1,15 +1,14 @@
-package org.lukashian.rendering
+package org.lukashian.clockwidget.rendering
 
 import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.content.Context
-import android.util.Log
 import android.widget.RemoteViews
-import org.lukashian.R
-import org.lukashian.data.loadCalendarInfo
-import org.lukashian.data.loadIndicator
-import org.lukashian.data.loadInstance
-import org.lukashian.data.scheduleCalendarInfoUpdate
+import org.lukashian.clockwidget.R
+import org.lukashian.clockwidget.data.loadCalendarInfo
+import org.lukashian.clockwidget.data.loadIndicator
+import org.lukashian.clockwidget.data.loadInstance
+import org.lukashian.clockwidget.data.scheduleCalendarInfoUpdate
 
 @SuppressLint("DefaultLocale")
 internal fun updateAppWidget(
@@ -17,7 +16,7 @@ internal fun updateAppWidget(
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-    Log.d("WidgetRenderer", "Updating Widget $appWidgetId")
+//    Log.d("WidgetRenderer", "Updating Widget $appWidgetId")
 
     val instance = context.loadInstance(appWidgetId)
     val indicator = context.loadIndicator(appWidgetId)

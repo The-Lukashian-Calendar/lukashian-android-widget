@@ -14,3 +14,5 @@ To download it onto your Android device, please visit the
 
 For more information on the calendar mechanism itself, please visit
 [lukashian.org](https://www.lukashian.org).
+
+This widget and its source code is available under [this license](https://github.com/The-Lukashian-Calendar/lukashian/blob/main/license-header.txt).
