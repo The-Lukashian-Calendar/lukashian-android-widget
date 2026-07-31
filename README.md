@@ -2,7 +2,7 @@ This widget displays the current time, day and year of the Earth or Mars instanc
 Lukashian Calendar.
 
 On some devices, there is a limit on how often a widget can update itself on the screen.
-This means that your Lukashian clock might run a few beeps behind.
+As a result, beeps might update in a slightly irregular pattern.
 
 If this is an issue on your device, you can also use the clock page for
 [Earth](https://www.lukashian.org/clock?calendar=earth&textColor=ffffff&backgroundColor=00043d) or

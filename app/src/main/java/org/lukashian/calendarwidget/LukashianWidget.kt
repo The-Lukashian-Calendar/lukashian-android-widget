@@ -1,4 +1,4 @@
-package org.lukashian.clockwidget
+package org.lukashian.calendarwidget
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -8,11 +8,11 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import androidx.work.WorkManager
-import org.lukashian.clockwidget.data.deleteCalendarInfo
-import org.lukashian.clockwidget.data.deleteWidgetData
-import org.lukashian.clockwidget.data.scheduleCalendarInfoUpdate
-import org.lukashian.clockwidget.model.Instance
-import org.lukashian.clockwidget.rendering.updateAppWidget
+import org.lukashian.calendarwidget.data.deleteCalendarInfo
+import org.lukashian.calendarwidget.data.deleteWidgetData
+import org.lukashian.calendarwidget.data.scheduleCalendarInfoUpdate
+import org.lukashian.calendarwidget.model.Instance
+import org.lukashian.calendarwidget.rendering.updateAppWidget
 import java.time.ZonedDateTime
 
 class LukashianWidget : AppWidgetProvider() {

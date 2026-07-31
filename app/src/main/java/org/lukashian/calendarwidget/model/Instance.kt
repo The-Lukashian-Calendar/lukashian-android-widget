@@ -1,4 +1,4 @@
-package org.lukashian.clockwidget.model
+package org.lukashian.calendarwidget.model
 
 enum class Instance {
     EARTH,

@@ -1,16 +1,16 @@
-package org.lukashian.clockwidget.data
+package org.lukashian.calendarwidget.data
 
 import android.content.Context
 import androidx.core.content.edit
-import org.lukashian.clockwidget.model.CalendarInfo
-import org.lukashian.clockwidget.model.Instance
-import org.lukashian.clockwidget.model.Instance.EARTH
-import org.lukashian.clockwidget.model.NUMBER_OF_OFFSETS
+import org.lukashian.calendarwidget.model.CalendarInfo
+import org.lukashian.calendarwidget.model.Instance
+import org.lukashian.calendarwidget.model.Instance.EARTH
+import org.lukashian.calendarwidget.model.NUMBER_OF_OFFSETS
 
 internal const val DEFAULT_INDICATOR = false
 internal val DEFAULT_INSTANCE = EARTH
 
-private const val WIDGET_PREFS_KEY = "org.lukashian.clockwidget.LukashianWidget"
+private const val WIDGET_PREFS_KEY = "org.lukashian.calendarwidget.LukashianWidget"
 
 private fun instance(appWidgetId: Int) = "instance_$appWidgetId"
 private fun indicator(appWidgetId: Int) = "indicator_$appWidgetId"

@@ -1,14 +1,14 @@
-package org.lukashian.clockwidget.rendering
+package org.lukashian.calendarwidget.rendering
 
 import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.widget.RemoteViews
-import org.lukashian.clockwidget.R
-import org.lukashian.clockwidget.data.loadCalendarInfo
-import org.lukashian.clockwidget.data.loadIndicator
-import org.lukashian.clockwidget.data.loadInstance
-import org.lukashian.clockwidget.data.scheduleCalendarInfoUpdate
+import org.lukashian.calendarwidget.R
+import org.lukashian.calendarwidget.data.loadCalendarInfo
+import org.lukashian.calendarwidget.data.loadIndicator
+import org.lukashian.calendarwidget.data.loadInstance
+import org.lukashian.calendarwidget.data.scheduleCalendarInfoUpdate
 
 @SuppressLint("DefaultLocale")
 internal fun updateAppWidget(

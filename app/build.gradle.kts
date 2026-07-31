@@ -3,15 +3,14 @@ plugins {
 }
 
 android {
-    namespace = "org.lukashian.clockwidget"
+    namespace = "org.lukashian.calendarwidget"
     compileSdk {
         version = release(37) {
             minorApiLevel = 0
         }
     }
-
     defaultConfig {
-        applicationId = "org.lukashian.clockwidget"
+        applicationId = "org.lukashian.calendarwidget"
         minSdk = 26
         targetSdk = 37
         versionCode = 1

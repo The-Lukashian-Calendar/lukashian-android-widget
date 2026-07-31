@@ -1,4 +1,4 @@
-package org.lukashian.clockwidget
+package org.lukashian.calendarwidget
 
 import android.appwidget.AppWidgetManager
 import android.content.Intent
@@ -8,15 +8,15 @@ import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
-import org.lukashian.clockwidget.data.DEFAULT_INSTANCE
-import org.lukashian.clockwidget.data.loadIndicator
-import org.lukashian.clockwidget.data.loadInstance
-import org.lukashian.clockwidget.data.saveIndicator
-import org.lukashian.clockwidget.data.saveInstance
-import org.lukashian.clockwidget.databinding.LukashianWidgetConfigureBinding
-import org.lukashian.clockwidget.model.Instance.EARTH
-import org.lukashian.clockwidget.model.Instance.MARS
-import org.lukashian.clockwidget.rendering.updateAppWidget
+import org.lukashian.calendarwidget.data.DEFAULT_INSTANCE
+import org.lukashian.calendarwidget.data.loadIndicator
+import org.lukashian.calendarwidget.data.loadInstance
+import org.lukashian.calendarwidget.data.saveIndicator
+import org.lukashian.calendarwidget.data.saveInstance
+import org.lukashian.calendarwidget.databinding.LukashianWidgetConfigureBinding
+import org.lukashian.calendarwidget.model.Instance.EARTH
+import org.lukashian.calendarwidget.model.Instance.MARS
+import org.lukashian.calendarwidget.rendering.updateAppWidget
 
 class LukashianConfigureActivity : AppCompatActivity() {
 

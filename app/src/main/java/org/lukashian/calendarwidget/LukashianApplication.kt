@@ -1,4 +1,4 @@
-package org.lukashian.clockwidget
+package org.lukashian.calendarwidget
 
 import android.app.Application
 import android.content.BroadcastReceiver

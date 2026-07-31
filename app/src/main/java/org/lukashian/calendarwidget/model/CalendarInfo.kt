@@ -1,4 +1,4 @@
-package org.lukashian.clockwidget.model
+package org.lukashian.calendarwidget.model
 
 const val NUMBER_OF_OFFSETS = 30
 

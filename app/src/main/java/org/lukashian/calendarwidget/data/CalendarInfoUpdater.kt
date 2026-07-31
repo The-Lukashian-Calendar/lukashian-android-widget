@@ -1,4 +1,4 @@
-package org.lukashian.clockwidget.data
+package org.lukashian.calendarwidget.data
 
 import android.content.Context
 import androidx.work.Constraints
@@ -11,9 +11,9 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import org.lukashian.clockwidget.model.CalendarInfo
-import org.lukashian.clockwidget.model.Instance.EARTH
-import org.lukashian.clockwidget.model.Instance.MARS
+import org.lukashian.calendarwidget.model.CalendarInfo
+import org.lukashian.calendarwidget.model.Instance.EARTH
+import org.lukashian.calendarwidget.model.Instance.MARS
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
