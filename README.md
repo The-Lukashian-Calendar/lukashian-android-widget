@@ -10,7 +10,7 @@ If this is an issue on your device, you can also use the clock page for
 in your browser.
 
 To download it onto your Android device, please visit the
-[Garmin App page](https://apps.garmin.com/apps/60848d83-5c25-4a6b-a5de-2f5cb6d45bdb).
+[Google Play Store](https://play.google.com/store/apps/details?id=org.lukashian.calendarwidget).
 
 For more information on the calendar mechanism itself, please visit
 [lukashian.org](https://www.lukashian.org).

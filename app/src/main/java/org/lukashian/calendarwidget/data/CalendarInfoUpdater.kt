@@ -1,6 +1,7 @@
 package org.lukashian.calendarwidget.data
 
 import android.content.Context
+import android.util.Log
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -56,12 +57,12 @@ internal class CalendarInfoUpdater(context: Context, params: WorkerParameters) :
                 applicationContext.saveCalendarInfo(MARS, marsInfo.body()!!)
                 Result.success()
             } else {
-//                Log.e("CalendarInfoUpdater", "Retrieval failed.\nEarth result: ${earthInfo.body()}\nMars result: ${marsInfo.body()}")
+                Log.e("CalendarInfoUpdater", "Retrieval failed.\nEarth result: ${earthInfo.body()}\nMars result: ${marsInfo.body()}")
                 Result.failure()
             }
         } catch (e: Exception) {
-//            Log.e("CalendarInfoUpdater", "Error during retrieval")
-//            e.printStackTrace()
+            Log.e("CalendarInfoUpdater", "Error during retrieval")
+            e.printStackTrace()
             Result.retry()
         }
     }

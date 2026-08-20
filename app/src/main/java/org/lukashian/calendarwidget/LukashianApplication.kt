@@ -10,9 +10,6 @@ import androidx.core.content.ContextCompat
 
 class LukashianApplication : Application() {
 
-    //TODO: Put Android URL instead of Garmin URL in README
-    //TODO: Put Android URL as repo URL
-
     override fun onCreate() {
         super.onCreate()
 //        Log.d("LukashianApplication", "Application Created")
