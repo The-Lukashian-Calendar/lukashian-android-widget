@@ -1,7 +1,6 @@
 package org.lukashian.calendarwidget.data
 
 import android.content.Context
-import android.util.Log
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -12,6 +11,7 @@ import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import org.lukashian.calendarwidget.Logger
 import org.lukashian.calendarwidget.model.CalendarInfo
 import org.lukashian.calendarwidget.model.Instance.EARTH
 import org.lukashian.calendarwidget.model.Instance.MARS
@@ -20,6 +20,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import java.util.concurrent.TimeUnit
+
+private val logger = Logger(CalendarInfoUpdater::class)
 
 internal interface LukashianApi {
     @GET("earth")
@@ -42,26 +44,26 @@ private val lukashianClient: LukashianApi by lazy {
 internal class CalendarInfoUpdater(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
         return try {
-//            Log.d("CalendarInfoUpdater", "Retrieving Earth Calendar Info")
+            logger.info("Retrieving Earth Calendar Info")
             val earthInfo = lukashianClient.getEarthCalendarInfo()
 
-//            Log.d("CalendarInfoUpdater", "Retrieving Mars Calendar Info")
+            logger.info("Retrieving Mars Calendar Info")
             val marsInfo = lukashianClient.getMarsCalendarInfo()
 
             if (
                 earthInfo.isSuccessful && earthInfo.body() != null &&
                 marsInfo.isSuccessful && marsInfo.body() != null
             ) {
-//                Log.d("CalendarInfoUpdater", "Saving Calendar Info")
+                logger.info("Saving Calendar Info")
                 applicationContext.saveCalendarInfo(EARTH, earthInfo.body()!!)
                 applicationContext.saveCalendarInfo(MARS, marsInfo.body()!!)
                 Result.success()
             } else {
-                Log.e("CalendarInfoUpdater", "Retrieval failed.\nEarth result: ${earthInfo.body()}\nMars result: ${marsInfo.body()}")
+                logger.error("Retrieval failed.\nEarth result: ${earthInfo.body()}\nMars result: ${marsInfo.body()}")
                 Result.failure()
             }
         } catch (e: Exception) {
-            Log.e("CalendarInfoUpdater", "Error during retrieval")
+            logger.error("Error during retrieval")
             e.printStackTrace()
             Result.retry()
         }
@@ -69,26 +71,32 @@ internal class CalendarInfoUpdater(context: Context, params: WorkerParameters) :
 }
 
 internal fun scheduleCalendarInfoUpdate(context: Context) {
-//    Log.d("CalendarInfoUpdater", "Scheduling CalendarInfo update")
+    logger.info("Scheduling CalendarInfo update")
 
     val immediateUpdate = OneTimeWorkRequestBuilder<CalendarInfoUpdater>()
         .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+        .addTag("immediateCalendarInfoUpdate")
         .build()
 
     WorkManager.getInstance(context).enqueueUniqueWork(
-        "immediateUpdate",
+        "immediateCalendarInfoUpdate",
         ExistingWorkPolicy.REPLACE,
         immediateUpdate
     )
 
     val periodicUpdate = PeriodicWorkRequestBuilder<CalendarInfoUpdater>(1, TimeUnit.DAYS)
         .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
-        .addTag("periodicUpdate")
+        .addTag("periodicCalendarInfoUpdate")
         .build()
 
     WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-        "periodicUpdate",
+        "periodicCalendarInfoUpdate",
         ExistingPeriodicWorkPolicy.REPLACE,
         periodicUpdate
     )
+}
+
+internal fun unscheduleCalendarInfoUpdate(context: Context) {
+    logger.info("Unscheduling CalendarInfo update")
+    WorkManager.getInstance(context).cancelAllWorkByTag("periodicCalendarInfoUpdate")
 }

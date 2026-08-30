@@ -16,9 +16,10 @@ import org.lukashian.calendarwidget.data.saveInstance
 import org.lukashian.calendarwidget.databinding.LukashianWidgetConfigureBinding
 import org.lukashian.calendarwidget.model.Instance.EARTH
 import org.lukashian.calendarwidget.model.Instance.MARS
-import org.lukashian.calendarwidget.rendering.updateAppWidget
+import org.lukashian.calendarwidget.rendering.renderAppWidget
 
 class LukashianConfigureActivity : AppCompatActivity() {
+    private val logger = Logger(LukashianConfigureActivity::class)
 
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private lateinit var binding: LukashianWidgetConfigureBinding
@@ -30,14 +31,14 @@ class LukashianConfigureActivity : AppCompatActivity() {
             else -> DEFAULT_INSTANCE
         }
 
-//        Log.d("LukashianConfigureActivity", "Calendar Instance chosen: $chosenInstance")
+        logger.info("Calendar Instance chosen: $chosenInstance")
         this.saveInstance(appWidgetId, chosenInstance)
 
         completeAction()
     }
 
     private var indicatorListener = CompoundButton.OnCheckedChangeListener { _, checked ->
-//        Log.d("LukashianConfigureActivity", "Indicator chosen: $checked")
+        logger.info("Indicator chosen: $checked")
         this.saveIndicator(appWidgetId, checked)
 
         completeAction()
@@ -46,7 +47,7 @@ class LukashianConfigureActivity : AppCompatActivity() {
     private fun completeAction() {
         // It is the responsibility of the configuration activity to update the app widget
         val appWidgetManager = AppWidgetManager.getInstance(this)
-        updateAppWidget(this, appWidgetManager, appWidgetId)
+        renderAppWidget(this, appWidgetManager, appWidgetId)
 
         // Make sure we pass back the original appWidgetId
         val resultValue = Intent()
@@ -57,7 +58,7 @@ class LukashianConfigureActivity : AppCompatActivity() {
     override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
 
-//        Log.d("LukashianConfigureActivity", "Configure Activity Created")
+        logger.info("Configure Activity Created")
 
         // Set the result to CANCELED.  This will cause the widget host to cancel
         // out of the widget placement if the user presses the back button.
@@ -87,17 +88,17 @@ class LukashianConfigureActivity : AppCompatActivity() {
 
         // Configure the save button
         findViewById<Button>(R.id.saveButton).setOnClickListener {
-//            Log.d("LukashianConfigureActivity", "Configuration saved")
+            logger.info("Configuration saved")
             completeAction()
             finish()
         }
 
         //Set current values in input components
         val instance = this.loadInstance(appWidgetId)
-//        Log.d("LukashianConfigureActivity", "Current Calendar Instance: $instance")
+        logger.info("Current Calendar Instance: $instance")
 
         val indicator = this.loadIndicator(appWidgetId)
-//        Log.d("LukashianConfigureActivity", "Current Calendar Indicator: $indicator")
+        logger.info("Current Calendar Indicator: $indicator")
 
         when (instance) {
             EARTH -> binding.radioGroup.check(R.id.radioButtonEarth)

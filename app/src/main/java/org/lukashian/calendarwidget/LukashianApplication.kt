@@ -7,12 +7,14 @@ import android.content.Intent
 import android.content.Intent.ACTION_SCREEN_ON
 import android.content.IntentFilter
 import androidx.core.content.ContextCompat
+import org.lukashian.calendarwidget.rendering.updateAllWidgets
 
 class LukashianApplication : Application() {
+    private val logger = Logger(LukashianApplication::class)
 
     override fun onCreate() {
         super.onCreate()
-//        Log.d("LukashianApplication", "Application Created")
+        logger.info("Application Created")
 
         val filter = IntentFilter().apply {
             addAction(ACTION_SCREEN_ON)
@@ -28,11 +30,13 @@ class LukashianApplication : Application() {
 }
 
 internal class ScreenReceiver : BroadcastReceiver() {
+    private val logger = Logger(ScreenReceiver::class)
+
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
             ACTION_SCREEN_ON -> {
-//                Log.d("LukashianConfigureActivity", "Screen On received")
-                refreshUpdateSchedule(context, runImmediately = true)
+                logger.info("Screen On received")
+                updateAllWidgets(context)
             }
         }
     }

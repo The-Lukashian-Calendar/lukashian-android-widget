@@ -4,19 +4,23 @@ import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.widget.RemoteViews
+import org.lukashian.calendarwidget.Logger
 import org.lukashian.calendarwidget.R
 import org.lukashian.calendarwidget.data.loadCalendarInfo
 import org.lukashian.calendarwidget.data.loadIndicator
 import org.lukashian.calendarwidget.data.loadInstance
 import org.lukashian.calendarwidget.data.scheduleCalendarInfoUpdate
 
+private val logger = Logger(WidgetRenderer::class)
+internal class WidgetRenderer
+
 @SuppressLint("DefaultLocale")
-internal fun updateAppWidget(
+internal fun renderAppWidget(
     context: Context,
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-//    Log.d("WidgetRenderer", "Updating Widget $appWidgetId")
+    logger.info("Rendering Widget $appWidgetId")
 
     val instance = context.loadInstance(appWidgetId)
     val indicator = context.loadIndicator(appWidgetId)
@@ -30,12 +34,12 @@ internal fun updateAppWidget(
     } else {
         val currentTime = System.currentTimeMillis() / 1000
 
-//        Log.d("WidgetRenderer", "localEpoch: ${info.localEpoch}")
-//        Log.d("WidgetRenderer", "firstDayNumber: ${info.firstDayNumber}")
-//        Log.d("WidgetRenderer", "firstYearOfDayNumber: ${info.firstYearOfDayNumber}")
-//        Log.d("WidgetRenderer", "nextYearStartIndex: ${info.nextYearStartIndex}")
-//        Log.d("WidgetRenderer", "offsets: ${info.offsets}")
-//        Log.d("WidgetRenderer", "currentTime: $currentTime")
+        logger.debug("localEpoch: ${info.localEpoch}")
+        logger.debug("firstDayNumber: ${info.firstDayNumber}")
+        logger.debug("firstYearOfDayNumber: ${info.firstYearOfDayNumber}")
+        logger.debug("nextYearStartIndex: ${info.nextYearStartIndex}")
+        logger.debug("offsets: ${info.offsets}")
+        logger.debug("currentTime: $currentTime")
 
         var index = -1
         var endOfPreviousDay = 0
@@ -62,23 +66,23 @@ internal fun updateAppWidget(
             appWidgetManager.updateAppWidget(appWidgetId, views)
             return
         }
-//        Log.d("WidgetRenderer", "index: $index")
-//        Log.d("WidgetRenderer", "endOfPreviousDay: $endOfPreviousDay")
-//        Log.d("WidgetRenderer", "startOfDay: $startOfDay")
-//        Log.d("WidgetRenderer", "endOfDay: $endOfDay")
+        logger.debug("index: $index")
+        logger.debug("endOfPreviousDay: $endOfPreviousDay")
+        logger.debug("startOfDay: $startOfDay")
+        logger.debug("endOfDay: $endOfDay")
 
         val totalSecondsOfDay = endOfDay - endOfPreviousDay
         val passedSecondsOfDay = currentTime - startOfDay //Use startOfDay, in order not to count current second itself as having passed, thereby achieving [0000-9999]
-//        Log.d("WidgetRenderer", "totalSecondsOfDay: $totalSecondsOfDay")
-//        Log.d("WidgetRenderer", "passedSecondsOfDay: $passedSecondsOfDay")
+        logger.debug("totalSecondsOfDay: $totalSecondsOfDay")
+        logger.debug("passedSecondsOfDay: $passedSecondsOfDay")
 
         val proportionPassed = ((passedSecondsOfDay.toDouble() / totalSecondsOfDay.toDouble()) * 10000.toDouble())
-//        Log.d("WidgetRenderer", "proportionPassed: $proportionPassed")
+        logger.debug("proportionPassed: $proportionPassed")
 
         val day = if (index < info.nextYearStartIndex) (info.firstDayNumber + index) else (index - info.nextYearStartIndex + 1)
         val year = if (index < info.nextYearStartIndex) info.firstYearOfDayNumber else (info.firstYearOfDayNumber + 1)
-//        Log.d("WidgetRenderer", "day: $day")
-//        Log.d("WidgetRenderer", "year: $year")
+        logger.debug("day: $day")
+        logger.debug("year: $year")
 
         val beepsString = String.format("%04d", proportionPassed.toInt())
         val dayYearString = "$day - $year"
