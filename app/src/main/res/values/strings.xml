@@ -12,8 +12,11 @@
         If the text looks too small as a result, consider resizing the widget horizontally.
     </string>
 
+    <string name="please_note">
+        Please note:
+    </string>
     <string name="update_limit_explanation">
-        Please note: On some devices, there is a limit on how often a widget can update itself on the screen.
+        On some devices, there is a limit on how often a widget can update itself on the screen.
         As a result, beeps might update in a slightly irregular pattern.
     </string>
 

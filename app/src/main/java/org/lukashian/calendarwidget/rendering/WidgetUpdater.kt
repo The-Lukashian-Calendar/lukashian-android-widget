@@ -56,6 +56,11 @@ internal fun updateAllWidgets(context: Context) {
         return
     }
 
+    val appWidgetManager = context.getSystemService(Context.APPWIDGET_SERVICE) as AppWidgetManager
+    allWidgetIds.forEach { appWidgetId ->
+        renderAppWidget(context, appWidgetManager, appWidgetId)
+    }
+
     val requestCode = LukashianWidget::class.java.name.hashCode()
     val updateIntent = Intent(context, LukashianWidget::class.java)
         .setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE) //This calls LukashianWidget.onUpdate

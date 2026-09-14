@@ -8,7 +8,6 @@ import org.lukashian.calendarwidget.data.deleteWidgetData
 import org.lukashian.calendarwidget.data.scheduleCalendarInfoUpdate
 import org.lukashian.calendarwidget.data.unscheduleCalendarInfoUpdate
 import org.lukashian.calendarwidget.model.Instance
-import org.lukashian.calendarwidget.rendering.renderAppWidget
 import org.lukashian.calendarwidget.rendering.scheduleWidgetUpdate
 import org.lukashian.calendarwidget.rendering.unscheduleWidgetUpdate
 import org.lukashian.calendarwidget.rendering.updateAllWidgets
@@ -26,11 +25,7 @@ class LukashianWidget : AppWidgetProvider() {
 
     //When one or more instances of a widget need rendering
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        logger.info("Widgets ${appWidgetIds.contentToString()} rendering")
-
-        appWidgetIds.forEach { appWidgetId ->
-            renderAppWidget(context, appWidgetManager, appWidgetId)
-        }
+        logger.info("Widgets ${appWidgetIds.contentToString()} updated")
         updateAllWidgets(context)
     }
 
