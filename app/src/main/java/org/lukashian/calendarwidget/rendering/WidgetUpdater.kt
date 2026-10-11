@@ -64,6 +64,7 @@ internal fun updateAllWidgets(context: Context) {
     val requestCode = LukashianWidget::class.java.name.hashCode()
     val updateIntent = Intent(context, LukashianWidget::class.java)
         .setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE) //This calls LukashianWidget.onUpdate
+        .setPackage(context.packageName)
         .putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, allWidgetIds)
     val flags = PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
     val pendingIntent = PendingIntent.getBroadcast(context, requestCode, updateIntent, flags)

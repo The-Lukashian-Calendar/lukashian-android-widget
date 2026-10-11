@@ -2,6 +2,9 @@
     <string name="app_name">Lukashian Calendar</string>
     <string name="app_description">Displays the Earth or Mars instance of the Lukashian Calendar</string>
 
+    <string name="main_text">Go to your homescreen and add the Lukashian Calendar widget.
+        You can even add two, one for Earth and one for Mars!</string>
+
     <string name="configure">Configure Calendar</string>
     <string name="save">SAVE SETTINGS</string>
     <string name="configure_instance">Choose instance</string>
@@ -17,7 +20,7 @@
     </string>
     <string name="update_limit_explanation">
         On some devices, there is a limit on how often a widget can update itself on the screen.
-        As a result, beeps might update in a slightly irregular pattern.
+        If beeps update in an irregular pattern, you can always tap the widget to update it.
     </string>
 
     <string name="earth">Earth</string>

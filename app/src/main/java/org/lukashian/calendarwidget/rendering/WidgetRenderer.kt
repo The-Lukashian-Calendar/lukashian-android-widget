@@ -1,10 +1,14 @@
 package org.lukashian.calendarwidget.rendering
 
 import android.annotation.SuppressLint
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.Context
+import android.content.Intent
 import android.widget.RemoteViews
 import org.lukashian.calendarwidget.Logger
+import org.lukashian.calendarwidget.LukashianWidget
+import org.lukashian.calendarwidget.LukashianWidget.Companion.ACTION_WIDGET_GLOBAL_TAP
 import org.lukashian.calendarwidget.R
 import org.lukashian.calendarwidget.data.loadCalendarInfo
 import org.lukashian.calendarwidget.data.loadIndicator
@@ -90,6 +94,13 @@ internal fun renderAppWidget(
 
         views.setTextViewText(R.id.beeps_text, beepsString)
         views.setTextViewText(R.id.day_year_text, dayYearString + instanceString)
+
+        val clickIntent = Intent(context, LukashianWidget::class.java)
+            .setAction(ACTION_WIDGET_GLOBAL_TAP) //Received in LukashianWidget
+            .setPackage(context.packageName)
+        val flags = PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        val pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, clickIntent, flags)
+        views.setOnClickPendingIntent(R.id.widget_root, pendingIntent)
     }
 
     // Instruct the widget manager to update the widget
