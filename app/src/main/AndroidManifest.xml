@@ -13,8 +13,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.LukashianWidget">
+        android:supportsRtl="true">
 
         <receiver
             android:name=".LukashianWidget"
@@ -31,6 +30,7 @@
 
         <activity
             android:name=".LukashianConfigureActivity"
+            android:theme="@style/Theme.LukashianWidgetConfigure"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -39,6 +39,7 @@
 
         <activity
             android:name=".LukashianMainActivity"
+            android:theme="@style/Theme.LukashianWidgetMain"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

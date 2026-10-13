@@ -18,8 +18,8 @@
         android:autoSizeTextType="uniform"
         android:gravity="center"
         android:maxLines="1"
-        android:textColor="#FFFFFFFF"
-        android:shadowColor="#FF000000"
+        android:textColor="@color/white"
+        android:shadowColor="@color/black"
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="1" />
@@ -35,8 +35,8 @@
         android:autoSizeTextType="uniform"
         android:gravity="center"
         android:maxLines="1"
-        android:textColor="#FFFFFFFF"
-        android:shadowColor="#FF000000"
+        android:textColor="@color/white"
+        android:shadowColor="@color/black"
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="1" />
