@@ -16,7 +16,7 @@
         android:supportsRtl="true">
 
         <receiver
-            android:name=".LukashianWidget"
+            android:name=".widget.LukashianWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -29,7 +29,7 @@
         </receiver>
 
         <activity
-            android:name=".LukashianConfigureActivity"
+            android:name=".widget.LukashianWidgetConfigureActivity"
             android:theme="@style/Theme.LukashianWidgetConfigure"
             android:exported="true">
             <intent-filter>
@@ -38,8 +38,8 @@
         </activity>
 
         <activity
-            android:name=".LukashianMainActivity"
-            android:theme="@style/Theme.LukashianWidgetMain"
+            android:name=".main.LukashianMainActivity"
+            android:theme="@style/Theme.LukashianMain"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

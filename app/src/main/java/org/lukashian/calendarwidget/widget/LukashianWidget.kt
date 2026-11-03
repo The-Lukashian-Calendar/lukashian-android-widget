@@ -1,17 +1,14 @@
-package org.lukashian.calendarwidget
+package org.lukashian.calendarwidget.widget
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
-import org.lukashian.calendarwidget.data.deleteCalendarInfo
+import org.lukashian.calendarwidget.Logger
 import org.lukashian.calendarwidget.data.deleteWidgetData
-import org.lukashian.calendarwidget.data.scheduleCalendarInfoUpdate
-import org.lukashian.calendarwidget.data.unscheduleCalendarInfoUpdate
-import org.lukashian.calendarwidget.model.Instance
-import org.lukashian.calendarwidget.rendering.scheduleWidgetUpdate
-import org.lukashian.calendarwidget.rendering.unscheduleWidgetUpdate
-import org.lukashian.calendarwidget.rendering.updateAllWidgets
+import org.lukashian.calendarwidget.widget.rendering.scheduleWidgetUpdate
+import org.lukashian.calendarwidget.widget.rendering.unscheduleWidgetUpdate
+import org.lukashian.calendarwidget.widget.rendering.updateAllWidgets
 
 private val logger = Logger(LukashianWidget::class)
 
@@ -24,7 +21,6 @@ class LukashianWidget : AppWidgetProvider() {
     //When first widget is added
     override fun onEnabled(context: Context) {
         logger.info("Widget enabled")
-        scheduleCalendarInfoUpdate(context)
         scheduleWidgetUpdate(context)
     }
 
@@ -46,11 +42,6 @@ class LukashianWidget : AppWidgetProvider() {
     //When last widget is deleted
     override fun onDisabled(context: Context) {
         logger.info("Widget disabled")
-
-        context.deleteCalendarInfo(Instance.EARTH)
-        context.deleteCalendarInfo(Instance.MARS)
-
-        unscheduleCalendarInfoUpdate(context)
         unscheduleWidgetUpdate(context)
     }
 

@@ -7,7 +7,8 @@ import android.content.Intent
 import android.content.Intent.ACTION_SCREEN_ON
 import android.content.IntentFilter
 import androidx.core.content.ContextCompat
-import org.lukashian.calendarwidget.rendering.updateAllWidgets
+import org.lukashian.calendarwidget.data.scheduleCalendarInfoUpdate
+import org.lukashian.calendarwidget.widget.rendering.updateAllWidgets
 
 class LukashianApplication : Application() {
     private val logger = Logger(LukashianApplication::class)
@@ -15,6 +16,8 @@ class LukashianApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         logger.info("Application Created")
+
+        scheduleCalendarInfoUpdate(applicationContext)
 
         val filter = IntentFilter().apply {
             addAction(ACTION_SCREEN_ON)
