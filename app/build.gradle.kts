@@ -11,7 +11,7 @@ android {
     }
     defaultConfig {
         applicationId = "org.lukashian.calendarwidget"
-        minSdk = 26
+        minSdk = 34
         targetSdk = 37
         versionCode = 7
         versionName = "2.0"

@@ -34,7 +34,7 @@ internal fun renderAppWidget(
     val views = RemoteViews(context.packageName, R.layout.lukashian_widget)
 
     if (info == null) {
-        showLoading(views, context, false)
+        showLoading(views, context)
     } else {
         val currentTime = System.currentTimeMillis() / 1000
 
@@ -66,7 +66,7 @@ internal fun renderAppWidget(
             }
         }
         if (index == -1) {
-            showLoading(views, context, true)
+            showLoading(views, context)
             appWidgetManager.updateAppWidget(appWidgetId, views)
             return
         }
@@ -107,10 +107,8 @@ internal fun renderAppWidget(
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
 
-private fun showLoading(views: RemoteViews, context: Context, scheduleCalendarInfoUpdate: Boolean) {
-    if (scheduleCalendarInfoUpdate) {
-        scheduleCalendarInfoUpdate(context)
-    }
+private fun showLoading(views: RemoteViews, context: Context) {
+    scheduleCalendarInfoUpdate(context)
     views.setTextViewText(R.id.beeps_text, context.getString(R.string.loading))
     views.setTextViewText(R.id.day_year_text, "")
 }
