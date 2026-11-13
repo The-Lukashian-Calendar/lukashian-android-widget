@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
     <queries>
         <package android:name="com.android.art" />
@@ -16,7 +21,7 @@
         android:supportsRtl="true">
 
         <receiver
-            android:name=".LukashianWidget"
+            android:name=".widget.LukashianWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -29,7 +34,7 @@
         </receiver>
 
         <activity
-            android:name=".LukashianConfigureActivity"
+            android:name=".widget.LukashianWidgetConfigureActivity"
             android:theme="@style/Theme.LukashianWidgetConfigure"
             android:exported="true">
             <intent-filter>
@@ -38,13 +43,39 @@
         </activity>
 
         <activity
-            android:name=".LukashianMainActivity"
-            android:theme="@style/Theme.LukashianWidgetMain"
+            android:name=".main.LukashianMainActivity"
+            android:theme="@style/Theme.LukashianMain"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".main.AlarmReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="org.lukashian.calendarwidget.ACTION_TRIGGER_ALARM" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".main.AlarmService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback">
+        </service>
+
+        <activity
+            android:name=".main.LukashianMainAlarmRingActivity"
+            android:theme="@style/Theme.LukashianMain"
+            android:exported="true"
+            android:showOnLockScreen="true"
+            android:turnScreenOn="true"
+            android:showWhenLocked="true"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance">
         </activity>
     </application>
 

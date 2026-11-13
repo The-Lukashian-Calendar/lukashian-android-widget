@@ -1,4 +1,4 @@
-package org.lukashian.calendarwidget.rendering
+package org.lukashian.calendarwidget.widget.rendering
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -12,7 +12,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import org.lukashian.calendarwidget.Logger
-import org.lukashian.calendarwidget.LukashianWidget
+import org.lukashian.calendarwidget.widget.LukashianWidget
 import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
 

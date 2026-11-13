@@ -1,0 +1,21 @@
+<resources>
+    <string name="configure">Configure Calendar</string>
+    <string name="save">SAVE SETTINGS</string>
+    <string name="configure_instance">Choose instance</string>
+    <string name="configure_indicator">Show instance indicator</string>
+
+    <string name="configure_indicator_explanation">
+        The instance indicator is useful when you have multiple instances of the calendar widget on your screen.
+        If the text looks too small as a result, consider resizing the widget horizontally.
+    </string>
+
+    <string name="please_note">
+        Please note:
+    </string>
+    <string name="update_limit_explanation">
+        On some devices, there is a limit on how often a widget can update itself on the screen.
+        If beeps update in an irregular pattern, you can always tap the widget to update it.
+    </string>
+
+    <string name="loading">loading…</string>
+</resources>

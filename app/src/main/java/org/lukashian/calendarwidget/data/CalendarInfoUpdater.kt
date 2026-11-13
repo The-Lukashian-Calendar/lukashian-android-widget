@@ -95,8 +95,3 @@ internal fun scheduleCalendarInfoUpdate(context: Context) {
         periodicUpdate
     )
 }
-
-internal fun unscheduleCalendarInfoUpdate(context: Context) {
-    logger.info("Unscheduling CalendarInfo update")
-    WorkManager.getInstance(context).cancelAllWorkByTag("periodicCalendarInfoUpdate")
-}

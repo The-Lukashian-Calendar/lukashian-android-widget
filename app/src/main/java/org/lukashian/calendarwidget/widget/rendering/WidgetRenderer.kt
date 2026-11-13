@@ -1,4 +1,4 @@
-package org.lukashian.calendarwidget.rendering
+package org.lukashian.calendarwidget.widget.rendering
 
 import android.annotation.SuppressLint
 import android.app.PendingIntent
@@ -7,13 +7,13 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import org.lukashian.calendarwidget.Logger
-import org.lukashian.calendarwidget.LukashianWidget
-import org.lukashian.calendarwidget.LukashianWidget.Companion.ACTION_WIDGET_GLOBAL_TAP
 import org.lukashian.calendarwidget.R
 import org.lukashian.calendarwidget.data.loadCalendarInfo
 import org.lukashian.calendarwidget.data.loadIndicator
 import org.lukashian.calendarwidget.data.loadInstance
 import org.lukashian.calendarwidget.data.scheduleCalendarInfoUpdate
+import org.lukashian.calendarwidget.widget.LukashianWidget
+import org.lukashian.calendarwidget.widget.LukashianWidget.Companion.ACTION_WIDGET_GLOBAL_TAP
 
 private val logger = Logger(WidgetRenderer::class)
 internal class WidgetRenderer
@@ -34,7 +34,7 @@ internal fun renderAppWidget(
     val views = RemoteViews(context.packageName, R.layout.lukashian_widget)
 
     if (info == null) {
-        showLoading(views, context, false)
+        showLoading(views, context)
     } else {
         val currentTime = System.currentTimeMillis() / 1000
 
@@ -66,7 +66,7 @@ internal fun renderAppWidget(
             }
         }
         if (index == -1) {
-            showLoading(views, context, true)
+            showLoading(views, context)
             appWidgetManager.updateAppWidget(appWidgetId, views)
             return
         }
@@ -107,10 +107,8 @@ internal fun renderAppWidget(
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
 
-private fun showLoading(views: RemoteViews, context: Context, scheduleCalendarInfoUpdate: Boolean) {
-    if (scheduleCalendarInfoUpdate) {
-        scheduleCalendarInfoUpdate(context)
-    }
+private fun showLoading(views: RemoteViews, context: Context) {
+    scheduleCalendarInfoUpdate(context)
     views.setTextViewText(R.id.beeps_text, context.getString(R.string.loading))
     views.setTextViewText(R.id.day_year_text, "")
 }
