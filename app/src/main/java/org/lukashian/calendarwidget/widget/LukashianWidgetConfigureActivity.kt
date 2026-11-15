@@ -1,4 +1,4 @@
-package org.lukashian.calendarwidget
+package org.lukashian.calendarwidget.widget
 
 import android.appwidget.AppWidgetManager
 import android.content.Intent
@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
+import org.lukashian.calendarwidget.Logger
+import org.lukashian.calendarwidget.R
 import org.lukashian.calendarwidget.data.DEFAULT_INSTANCE
 import org.lukashian.calendarwidget.data.loadIndicator
 import org.lukashian.calendarwidget.data.loadInstance
@@ -16,10 +18,10 @@ import org.lukashian.calendarwidget.data.saveInstance
 import org.lukashian.calendarwidget.databinding.LukashianWidgetConfigureBinding
 import org.lukashian.calendarwidget.model.Instance.EARTH
 import org.lukashian.calendarwidget.model.Instance.MARS
-import org.lukashian.calendarwidget.rendering.renderAppWidget
+import org.lukashian.calendarwidget.widget.rendering.renderAppWidget
 
-class LukashianConfigureActivity : AppCompatActivity() {
-    private val logger = Logger(LukashianConfigureActivity::class)
+class LukashianWidgetConfigureActivity : AppCompatActivity() {
+    private val logger = Logger(LukashianWidgetConfigureActivity::class)
 
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private lateinit var binding: LukashianWidgetConfigureBinding

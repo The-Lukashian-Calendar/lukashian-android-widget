@@ -10,7 +10,7 @@ import org.lukashian.calendarwidget.model.NUMBER_OF_OFFSETS
 internal const val DEFAULT_INDICATOR = false
 internal val DEFAULT_INSTANCE = EARTH
 
-private const val WIDGET_PREFS_KEY = "org.lukashian.calendarwidget.LukashianWidget"
+private const val PREFS_KEY = "org.lukashian.calendarwidget.LukashianWidget"
 
 private fun instance(appWidgetId: Int) = "instance_$appWidgetId"
 private fun indicator(appWidgetId: Int) = "indicator_$appWidgetId"
@@ -22,38 +22,38 @@ private fun nextYearStartIndex(instance: Instance) = "nextYearStartIndex_${insta
 private fun offsets(instance: Instance, index: Int) = "offsets_${instance.name.lowercase()}_$index"
 
 internal fun Context.saveInstance(appWidgetId: Int, instance: Instance) {
-    getSharedPreferences(WIDGET_PREFS_KEY, 0).edit {
+    getSharedPreferences(PREFS_KEY, 0).edit {
         putString(instance(appWidgetId), instance.name)
     }
 }
 
 internal fun Context.loadInstance(appWidgetId: Int): Instance {
-    return getSharedPreferences(WIDGET_PREFS_KEY, 0)
+    return getSharedPreferences(PREFS_KEY, 0)
         .getString(instance(appWidgetId), null)
         ?.let { Instance.valueOf(it) }
         ?: DEFAULT_INSTANCE
 }
 
 internal fun Context.saveIndicator(appWidgetId: Int, indicator: Boolean) {
-    getSharedPreferences(WIDGET_PREFS_KEY, 0).edit {
+    getSharedPreferences(PREFS_KEY, 0).edit {
         putBoolean(indicator(appWidgetId), indicator)
     }
 }
 
 internal fun Context.loadIndicator(appWidgetId: Int): Boolean {
-    return getSharedPreferences(WIDGET_PREFS_KEY, 0)
+    return getSharedPreferences(PREFS_KEY, 0)
         .getBoolean(indicator(appWidgetId), DEFAULT_INDICATOR)
 }
 
 internal fun Context.deleteWidgetData(appWidgetId: Int) {
-    getSharedPreferences(WIDGET_PREFS_KEY, 0).edit {
+    getSharedPreferences(PREFS_KEY, 0).edit {
         remove(instance(appWidgetId))
         remove(indicator(appWidgetId))
     }
 }
 
 internal fun Context.saveCalendarInfo(instance: Instance, info: CalendarInfo) {
-    getSharedPreferences(WIDGET_PREFS_KEY, 0).edit {
+    getSharedPreferences(PREFS_KEY, 0).edit {
         putInt(localEpoch(instance), info.localEpoch)
         putInt(firstDayNumber(instance), info.firstDayNumber)
         putInt(firstYearOfDayNumber(instance), info.firstYearOfDayNumber)
@@ -65,7 +65,7 @@ internal fun Context.saveCalendarInfo(instance: Instance, info: CalendarInfo) {
 }
 
 internal fun Context.loadCalendarInfo(instance: Instance): CalendarInfo? {
-    return getSharedPreferences(WIDGET_PREFS_KEY, 0).let { prefs ->
+    return getSharedPreferences(PREFS_KEY, 0).let { prefs ->
         if (
             prefs.contains(localEpoch(instance)) &&
             prefs.contains(firstDayNumber(instance)) &&
@@ -81,15 +81,5 @@ internal fun Context.loadCalendarInfo(instance: Instance): CalendarInfo? {
                 (0..<NUMBER_OF_OFFSETS).map { i -> prefs.getInt(offsets(instance, i), 0) }.toIntArray()
             )
         } else null
-    }
-}
-
-internal fun Context.deleteCalendarInfo(instance: Instance) {
-    getSharedPreferences(WIDGET_PREFS_KEY, 0).edit {
-        remove(localEpoch(instance))
-        remove(firstDayNumber(instance))
-        remove(firstYearOfDayNumber(instance))
-        remove(nextYearStartIndex(instance))
-        (0..<NUMBER_OF_OFFSETS).forEach { i -> remove(offsets(instance, i)) }
     }
 }

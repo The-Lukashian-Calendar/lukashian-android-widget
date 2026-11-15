@@ -11,10 +11,10 @@ android {
     }
     defaultConfig {
         applicationId = "org.lukashian.calendarwidget"
-        minSdk = 26
+        minSdk = 34
         targetSdk = 37
-        versionCode = 6
-        versionName = "1.5"
+        versionCode = 7
+        versionName = "2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -22,9 +22,9 @@ android {
     buildTypes {
         // Use this to emulate Google Play Store builds locally
         debug {
-            isDebuggable = false
+            isDebuggable = true
             optimization {
-                enable = true
+                enable = false
             }
         }
         release {
