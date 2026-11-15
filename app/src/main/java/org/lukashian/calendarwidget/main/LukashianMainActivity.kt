@@ -2,7 +2,6 @@ package org.lukashian.calendarwidget.main
 
 import android.Manifest
 import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -14,6 +13,8 @@ import androidx.core.content.ContextCompat
 import org.lukashian.calendarwidget.Logger
 import org.lukashian.calendarwidget.databinding.LukashianMainBinding
 import org.lukashian.calendarwidget.main.LukashianMainActivity.Companion.ACTION_TRIGGER_ALARM
+import org.lukashian.calendarwidget.piForActivity
+import org.lukashian.calendarwidget.piForBroadcast
 import java.time.ZonedDateTime
 
 class LukashianMainActivity : AppCompatActivity() {
@@ -63,24 +64,14 @@ class LukashianMainActivity : AppCompatActivity() {
         -Manually turning it off shoudl unschedule iut
          */
 
-        val flags = PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
-
-        val showRequestCode = LukashianMainActivity::class.java.name.hashCode()
-        val showIntent = Intent(applicationContext, LukashianMainActivity::class.java)
-            .setPackage(applicationContext.packageName)
-        val showPendingIntent = PendingIntent.getBroadcast(applicationContext, showRequestCode, showIntent, flags)
-
-        val triggerRequestCode = AlarmReceiver::class.java.name.hashCode()
-        val triggerIntent = Intent(applicationContext, AlarmReceiver::class.java)
-            .setAction(ACTION_TRIGGER_ALARM)
-            .setPackage(applicationContext.packageName)
-        val triggerPendingIntent = PendingIntent.getBroadcast(applicationContext, triggerRequestCode, triggerIntent, flags)
+        val showPI = piForActivity(LukashianMainActivity::class.java, applicationContext)
+        val triggerPI = piForBroadcast(AlarmReceiver::class.java, applicationContext, action = ACTION_TRIGGER_ALARM)
 
         val triggerTime = ZonedDateTime.now().plusSeconds(10)
-        val alarmInfo = AlarmManager.AlarmClockInfo(triggerTime.toInstant().toEpochMilli(), showPendingIntent)
+        val alarmInfo = AlarmManager.AlarmClockInfo(triggerTime.toInstant().toEpochMilli(), showPI)
         val alarmManager = applicationContext.getSystemService(ALARM_SERVICE) as AlarmManager
 
-        alarmManager.setAlarmClock(alarmInfo, triggerPendingIntent)
+        alarmManager.setAlarmClock(alarmInfo, triggerPI)
     }
 }
 
@@ -91,6 +82,7 @@ internal class AlarmReceiver : BroadcastReceiver() {
         when (intent.action) {
             ACTION_TRIGGER_ALARM -> {
                 logger.info("Trigger Alarm received")
+                //TODO: disable actual alarm
                 ContextCompat.startForegroundService(context, Intent(context, AlarmService::class.java))
             }
         }

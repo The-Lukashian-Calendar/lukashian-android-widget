@@ -80,7 +80,7 @@ internal fun scheduleCalendarInfoUpdate(context: Context) {
 
     WorkManager.getInstance(context).enqueueUniqueWork(
         "immediateCalendarInfoUpdate",
-        ExistingWorkPolicy.REPLACE,
+        ExistingWorkPolicy.KEEP, //Don't replace update attempts on slow connections
         immediateUpdate
     )
 

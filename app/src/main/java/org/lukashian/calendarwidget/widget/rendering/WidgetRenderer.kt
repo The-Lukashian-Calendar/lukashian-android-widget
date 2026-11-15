@@ -1,10 +1,8 @@
 package org.lukashian.calendarwidget.widget.rendering
 
 import android.annotation.SuppressLint
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.Context
-import android.content.Intent
 import android.widget.RemoteViews
 import org.lukashian.calendarwidget.Logger
 import org.lukashian.calendarwidget.R
@@ -12,6 +10,7 @@ import org.lukashian.calendarwidget.data.loadCalendarInfo
 import org.lukashian.calendarwidget.data.loadIndicator
 import org.lukashian.calendarwidget.data.loadInstance
 import org.lukashian.calendarwidget.data.scheduleCalendarInfoUpdate
+import org.lukashian.calendarwidget.piForBroadcast
 import org.lukashian.calendarwidget.widget.LukashianWidget
 import org.lukashian.calendarwidget.widget.LukashianWidget.Companion.ACTION_WIDGET_GLOBAL_TAP
 
@@ -95,12 +94,9 @@ internal fun renderAppWidget(
         views.setTextViewText(R.id.beeps_text, beepsString)
         views.setTextViewText(R.id.day_year_text, dayYearString + instanceString)
 
-        val clickIntent = Intent(context, LukashianWidget::class.java)
-            .setAction(ACTION_WIDGET_GLOBAL_TAP) //Received in LukashianWidget
-            .setPackage(context.packageName)
-        val flags = PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        val pendingIntent = PendingIntent.getBroadcast(context, appWidgetId, clickIntent, flags)
-        views.setOnClickPendingIntent(R.id.widget_root, pendingIntent)
+        val clickPI = piForBroadcast(LukashianWidget::class.java, context,
+            action = ACTION_WIDGET_GLOBAL_TAP, piRequestCode = appWidgetId)
+        views.setOnClickPendingIntent(R.id.widget_root, clickPI)
     }
 
     // Instruct the widget manager to update the widget
