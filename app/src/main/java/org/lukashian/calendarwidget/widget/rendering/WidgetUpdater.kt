@@ -1,6 +1,7 @@
 package org.lukashian.calendarwidget.widget.rendering
 
 import android.app.AlarmManager
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
@@ -10,7 +11,8 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import org.lukashian.calendarwidget.Logger
-import org.lukashian.calendarwidget.piForBroadcast
+import org.lukashian.calendarwidget.REQUEST_CODE_WIDGET_UPDATE
+import org.lukashian.calendarwidget.pi
 import org.lukashian.calendarwidget.widget.LukashianWidget
 import java.time.ZonedDateTime
 import java.util.concurrent.TimeUnit
@@ -60,9 +62,12 @@ internal fun updateAllWidgets(context: Context) {
         renderAppWidget(context, appWidgetManager, appWidgetId)
     }
 
-    val updatePI = piForBroadcast(LukashianWidget::class.java, context,
-        action = AppWidgetManager.ACTION_APPWIDGET_UPDATE, //This calls LukashianWidget.onUpdate
-        iExtras = listOf(AppWidgetManager.EXTRA_APPWIDGET_IDS to allWidgetIds))
+    val updatePI = pi(PendingIntent::getBroadcast, context,
+        iReceiverClass = LukashianWidget::class.java,
+        iAction = AppWidgetManager.ACTION_APPWIDGET_UPDATE, //This calls LukashianWidget.onUpdate
+        iExtras = listOf(AppWidgetManager.EXTRA_APPWIDGET_IDS to allWidgetIds),
+        piRequestCode = REQUEST_CODE_WIDGET_UPDATE
+    )
 
     val nextUpdate = ZonedDateTime.now().plusSeconds(UPDATE_INTERVAL_SECONDS)
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager

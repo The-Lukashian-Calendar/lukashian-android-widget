@@ -2,6 +2,7 @@ package org.lukashian.calendarwidget.main
 
 import android.Manifest
 import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -10,18 +11,15 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import org.lukashian.calendarwidget.ACTION_TRIGGER_ALARM
 import org.lukashian.calendarwidget.Logger
+import org.lukashian.calendarwidget.REQUEST_CODE_SHOW_MAIN_ACTIVITY
+import org.lukashian.calendarwidget.REQUEST_CODE_TRIGGER_ALARM
 import org.lukashian.calendarwidget.databinding.LukashianMainBinding
-import org.lukashian.calendarwidget.main.LukashianMainActivity.Companion.ACTION_TRIGGER_ALARM
-import org.lukashian.calendarwidget.piForActivity
-import org.lukashian.calendarwidget.piForBroadcast
+import org.lukashian.calendarwidget.pi
 import java.time.ZonedDateTime
 
 class LukashianMainActivity : AppCompatActivity() {
-
-    companion object {
-        const val ACTION_TRIGGER_ALARM = "org.lukashian.calendarwidget.ACTION_TRIGGER_ALARM"
-    }
 
     private val logger = Logger(LukashianMainActivity::class)
 
@@ -52,7 +50,6 @@ class LukashianMainActivity : AppCompatActivity() {
 
 
 
-        //TODO: simplify intent creation (getBroadcast, getActivity, getService)??
         //TODO: layout
         /*
         -First, figure out which lukashian day the alarm will be, either today or tomo, by comparing with current beeps
@@ -64,8 +61,15 @@ class LukashianMainActivity : AppCompatActivity() {
         -Manually turning it off shoudl unschedule iut
          */
 
-        val showPI = piForActivity(LukashianMainActivity::class.java, applicationContext)
-        val triggerPI = piForBroadcast(AlarmReceiver::class.java, applicationContext, action = ACTION_TRIGGER_ALARM)
+        val showPI = pi(PendingIntent::getActivity, applicationContext,
+            iReceiverClass = LukashianMainActivity::class.java,
+            piRequestCode = REQUEST_CODE_SHOW_MAIN_ACTIVITY
+        )
+        val triggerPI = pi(PendingIntent::getBroadcast, applicationContext,
+            iReceiverClass = AlarmReceiver::class.java,
+            iAction = ACTION_TRIGGER_ALARM,
+            piRequestCode = REQUEST_CODE_TRIGGER_ALARM
+        )
 
         val triggerTime = ZonedDateTime.now().plusSeconds(10)
         val alarmInfo = AlarmManager.AlarmClockInfo(triggerTime.toInstant().toEpochMilli(), showPI)

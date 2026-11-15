@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
@@ -14,17 +15,18 @@ import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import org.lukashian.calendarwidget.ACTION_STOP_ALARM_SOUND
 import org.lukashian.calendarwidget.Logger
 import org.lukashian.calendarwidget.R
-import org.lukashian.calendarwidget.piForActivity
-import org.lukashian.calendarwidget.piForService
+import org.lukashian.calendarwidget.REQUEST_CODE_RING_ALARM
+import org.lukashian.calendarwidget.REQUEST_CODE_STOP_ALARM_SOUND
+import org.lukashian.calendarwidget.pi
 
 class AlarmService : Service() {
 
     companion object {
-        const val ALARM_CHANNEL_ID = "alarm_channel"
         const val ALARM_NOTIFICATION_ID = 1001
-        const val ACTION_STOP_ALARM_SOUND = "org.lukashian.calendarwidget.ACTION_STOP_ALARM_SOUND"
+        const val ALARM_CHANNEL_ID = "alarm_channel"
     }
 
     private lateinit var notificationManager: NotificationManager
@@ -63,12 +65,18 @@ class AlarmService : Service() {
         notificationManager.createNotificationChannel(channel)
 
         // Create the Intent for full-screen Ring Activity
-        val ringPI = piForActivity(LukashianMainAlarmRingActivity::class.java, applicationContext,
-            iFlags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val ringPI = pi(PendingIntent::getActivity, applicationContext,
+            iReceiverClass = LukashianMainAlarmRingActivity::class.java,
+            iFlags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP,
+            piRequestCode = REQUEST_CODE_RING_ALARM
+        )
 
         //Create the Intent for stopping the Alarm Sound
-        val stopSoundPI = piForService(AlarmService::class.java, applicationContext,
-            action = ACTION_STOP_ALARM_SOUND)
+        val stopSoundPI = pi(PendingIntent::getService, applicationContext,
+            iReceiverClass = AlarmService::class.java,
+            iAction = ACTION_STOP_ALARM_SOUND,
+            piRequestCode = REQUEST_CODE_STOP_ALARM_SOUND
+        )
 
         // Build the notification with the full-screen intent attached
         val builder = NotificationCompat.Builder(applicationContext, ALARM_CHANNEL_ID)
@@ -125,7 +133,6 @@ class AlarmService : Service() {
         mediaPlayer = null
         audioFocusRequest?.let { audioManager.abandonAudioFocusRequest(it) }
 
-        stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
     }
 

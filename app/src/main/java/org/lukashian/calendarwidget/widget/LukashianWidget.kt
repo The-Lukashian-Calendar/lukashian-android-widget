@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import org.lukashian.calendarwidget.ACTION_WIDGET_GLOBAL_TAP
 import org.lukashian.calendarwidget.Logger
 import org.lukashian.calendarwidget.data.deleteWidgetData
 import org.lukashian.calendarwidget.widget.rendering.scheduleWidgetUpdate
@@ -13,10 +14,6 @@ import org.lukashian.calendarwidget.widget.rendering.updateAllWidgets
 private val logger = Logger(LukashianWidget::class)
 
 class LukashianWidget : AppWidgetProvider() {
-
-    companion object {
-        const val ACTION_WIDGET_GLOBAL_TAP = "org.lukashian.calendarwidget.ACTION_WIDGET_GLOBAL_TAP"
-    }
 
     //When first widget is added
     override fun onEnabled(context: Context) {
