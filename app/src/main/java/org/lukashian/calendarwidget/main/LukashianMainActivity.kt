@@ -50,7 +50,8 @@ class LukashianMainActivity : AppCompatActivity() {
 
 
 
-        //TODO: layout
+        //TODO: Add alarm field to the DataManager and use them for all TODO's except layout
+        //TODO: layout (make sure to set and unset the alarm whenever the user toggles that switch, in addition to setting the datamanager)
         /*
         -First, figure out which lukashian day the alarm will be, either today or tomo, by comparing with current beeps
         -Then, you now day and proportion of day when the alarm should go off, this then easily translates into an offset based on json data
@@ -71,7 +72,7 @@ class LukashianMainActivity : AppCompatActivity() {
             piRequestCode = REQUEST_CODE_TRIGGER_ALARM
         )
 
-        val triggerTime = ZonedDateTime.now().plusSeconds(10)
+        val triggerTime = ZonedDateTime.now().plusSeconds(3)
         val alarmInfo = AlarmManager.AlarmClockInfo(triggerTime.toInstant().toEpochMilli(), showPI)
         val alarmManager = applicationContext.getSystemService(ALARM_SERVICE) as AlarmManager
 

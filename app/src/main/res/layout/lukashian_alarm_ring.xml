@@ -6,29 +6,45 @@
     android:background="@color/darkblue"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!--
+        layout_constraintTop_toTopOf without layout_constraintBottom_toBottomOf
+        moves to the top. Reverse to the bottom. Having both moves to the middle.
+        Same for Start and End wrt left and right.
+
+        paddingHorizontal is used for image size
+    -->
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingTop="40dp"
+        android:paddingHorizontal="100dp"
+        android:src="@drawable/logo_square_transparent" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="40dp"
-            android:src="@drawable/logo_square_transparent" />
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/alarmTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="100sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:lineHeight="26sp"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:text="Ring!!!!" />
-
-    </LinearLayout>
+    <TextView
+        app:layout_constraintTop_toTopOf="@+id/alarmTime"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/tapToDismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:text="@string/tapToDismiss" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

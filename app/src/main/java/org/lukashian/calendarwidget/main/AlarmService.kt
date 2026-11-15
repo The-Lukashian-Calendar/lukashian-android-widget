@@ -19,7 +19,7 @@ import org.lukashian.calendarwidget.ACTION_STOP_ALARM_SOUND
 import org.lukashian.calendarwidget.Logger
 import org.lukashian.calendarwidget.R
 import org.lukashian.calendarwidget.REQUEST_CODE_RING_ALARM
-import org.lukashian.calendarwidget.REQUEST_CODE_STOP_ALARM_SOUND
+import org.lukashian.calendarwidget.REQUEST_CODE_STOP_ALARM_SOUND_FROM_NOTIFICATION
 import org.lukashian.calendarwidget.pi
 
 class AlarmService : Service() {
@@ -66,7 +66,7 @@ class AlarmService : Service() {
 
         // Create the Intent for full-screen Ring Activity
         val ringPI = pi(PendingIntent::getActivity, applicationContext,
-            iReceiverClass = LukashianMainAlarmRingActivity::class.java,
+            iReceiverClass = LukashianAlarmRingActivity::class.java,
             iFlags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP,
             piRequestCode = REQUEST_CODE_RING_ALARM
         )
@@ -75,7 +75,7 @@ class AlarmService : Service() {
         val stopSoundPI = pi(PendingIntent::getService, applicationContext,
             iReceiverClass = AlarmService::class.java,
             iAction = ACTION_STOP_ALARM_SOUND,
-            piRequestCode = REQUEST_CODE_STOP_ALARM_SOUND
+            piRequestCode = REQUEST_CODE_STOP_ALARM_SOUND_FROM_NOTIFICATION
         )
 
         // Build the notification with the full-screen intent attached

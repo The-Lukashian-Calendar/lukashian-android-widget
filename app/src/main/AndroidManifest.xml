@@ -68,7 +68,7 @@
         </service>
 
         <activity
-            android:name=".main.LukashianMainAlarmRingActivity"
+            android:name=".main.LukashianAlarmRingActivity"
             android:theme="@style/Theme.LukashianMain"
             android:exported="true"
             android:showOnLockScreen="true"
