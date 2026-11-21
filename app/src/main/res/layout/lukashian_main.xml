@@ -29,6 +29,14 @@
             android:textSize="20sp"
             android:text="@string/main_text" />
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/alarmEnabledSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="16sp"
+            android:text="@string/configure_indicator"
+            android:layout_marginBottom="8dp" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

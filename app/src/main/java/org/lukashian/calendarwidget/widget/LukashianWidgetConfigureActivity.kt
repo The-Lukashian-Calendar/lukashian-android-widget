@@ -10,7 +10,7 @@ import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import org.lukashian.calendarwidget.Logger
 import org.lukashian.calendarwidget.R
-import org.lukashian.calendarwidget.data.DEFAULT_INSTANCE
+import org.lukashian.calendarwidget.data.DEFAULT_WIDGET_INSTANCE
 import org.lukashian.calendarwidget.data.loadIndicator
 import org.lukashian.calendarwidget.data.loadInstance
 import org.lukashian.calendarwidget.data.saveIndicator
@@ -24,13 +24,12 @@ class LukashianWidgetConfigureActivity : AppCompatActivity() {
     private val logger = Logger(LukashianWidgetConfigureActivity::class)
 
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
-    private lateinit var binding: LukashianWidgetConfigureBinding
 
     private var instanceListener = RadioGroup.OnCheckedChangeListener { _, checkedId ->
         val chosenInstance = when (checkedId) {
             R.id.radioButtonEarth -> EARTH
             R.id.radioButtonMars -> MARS
-            else -> DEFAULT_INSTANCE
+            else -> DEFAULT_WIDGET_INSTANCE
         }
 
         logger.info("Calendar Instance chosen: $chosenInstance")
@@ -66,7 +65,7 @@ class LukashianWidgetConfigureActivity : AppCompatActivity() {
         // out of the widget placement if the user presses the back button.
         setResult(RESULT_CANCELED)
 
-        binding = LukashianWidgetConfigureBinding.inflate(layoutInflater)
+        val binding = LukashianWidgetConfigureBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Find the widget id from the intent

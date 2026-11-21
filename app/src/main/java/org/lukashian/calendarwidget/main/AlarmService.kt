@@ -20,7 +20,9 @@ import org.lukashian.calendarwidget.Logger
 import org.lukashian.calendarwidget.R
 import org.lukashian.calendarwidget.REQUEST_CODE_RING_ALARM
 import org.lukashian.calendarwidget.REQUEST_CODE_STOP_ALARM_SOUND_FROM_NOTIFICATION
+import org.lukashian.calendarwidget.data.loadAlarmBeeps
 import org.lukashian.calendarwidget.pi
+import org.lukashian.calendarwidget.renderBeeps
 
 class AlarmService : Service() {
 
@@ -81,7 +83,7 @@ class AlarmService : Service() {
         // Build the notification with the full-screen intent attached
         val builder = NotificationCompat.Builder(applicationContext, ALARM_CHANNEL_ID)
             .setSmallIcon(R.drawable.alarm_ring)
-            .setContentTitle("Lukashian Alarm - 5000 beeps") //TODO: replace with number of currently set alarm
+            .setContentTitle("Lukashian Alarm - ${renderBeeps(applicationContext.loadAlarmBeeps())} beeps")
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setFullScreenIntent(ringPI, true)

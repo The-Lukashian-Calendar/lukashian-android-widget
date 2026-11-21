@@ -7,13 +7,21 @@ import org.lukashian.calendarwidget.model.Instance
 import org.lukashian.calendarwidget.model.Instance.EARTH
 import org.lukashian.calendarwidget.model.NUMBER_OF_OFFSETS
 
-internal const val DEFAULT_INDICATOR = false
-internal val DEFAULT_INSTANCE = EARTH
+internal const val DEFAULT_WIDGET_INDICATOR = false
+internal val DEFAULT_WIDGET_INSTANCE = EARTH
 
-private const val PREFS_KEY = "org.lukashian.calendarwidget.LukashianWidget"
+internal const val DEFAULT_ALARM_BEEPS = 0
+internal val DEFAULT_ALARM_INSTANCE = EARTH
+internal const val DEFAULT_ALARM_ENABLED = false
+
+const val PREFS_KEY = "org.lukashian.calendarwidget.LukashianWidget"
 
 private fun instance(appWidgetId: Int) = "instance_$appWidgetId"
 private fun indicator(appWidgetId: Int) = "indicator_$appWidgetId"
+
+private fun alarmBeeps() = "alarm_beeps"
+private fun alarmInstance() = "alarm_instance"
+fun alarmEnabled() = "alarm_enabled"
 
 private fun localEpoch(instance: Instance) = "localEpoch_${instance.name.lowercase()}"
 private fun firstDayNumber(instance: Instance) = "firstDayNumber_${instance.name.lowercase()}"
@@ -31,7 +39,7 @@ internal fun Context.loadInstance(appWidgetId: Int): Instance {
     return getSharedPreferences(PREFS_KEY, 0)
         .getString(instance(appWidgetId), null)
         ?.let { Instance.valueOf(it) }
-        ?: DEFAULT_INSTANCE
+        ?: DEFAULT_WIDGET_INSTANCE
 }
 
 internal fun Context.saveIndicator(appWidgetId: Int, indicator: Boolean) {
@@ -42,7 +50,7 @@ internal fun Context.saveIndicator(appWidgetId: Int, indicator: Boolean) {
 
 internal fun Context.loadIndicator(appWidgetId: Int): Boolean {
     return getSharedPreferences(PREFS_KEY, 0)
-        .getBoolean(indicator(appWidgetId), DEFAULT_INDICATOR)
+        .getBoolean(indicator(appWidgetId), DEFAULT_WIDGET_INDICATOR)
 }
 
 internal fun Context.deleteWidgetData(appWidgetId: Int) {
@@ -50,6 +58,41 @@ internal fun Context.deleteWidgetData(appWidgetId: Int) {
         remove(instance(appWidgetId))
         remove(indicator(appWidgetId))
     }
+}
+
+internal fun Context.saveAlarmBeeps(beeps: Int) {
+    getSharedPreferences(PREFS_KEY, 0).edit {
+        putInt(alarmBeeps(), beeps)
+    }
+}
+
+internal fun Context.loadAlarmBeeps(): Int {
+    return getSharedPreferences(PREFS_KEY, 0)
+        .getInt(alarmBeeps(), DEFAULT_ALARM_BEEPS)
+}
+
+internal fun Context.saveAlarmInstance(instance: Instance) {
+    getSharedPreferences(PREFS_KEY, 0).edit {
+        putString(alarmInstance(), instance.name)
+    }
+}
+
+internal fun Context.loadAlarmInstance(): Instance {
+    return getSharedPreferences(PREFS_KEY, 0)
+        .getString(alarmInstance(), null)
+        ?.let { Instance.valueOf(it) }
+        ?: DEFAULT_ALARM_INSTANCE
+}
+
+internal fun Context.saveAlarmEnabled(enabled: Boolean) {
+    getSharedPreferences(PREFS_KEY, 0).edit {
+        putBoolean(alarmEnabled(), enabled)
+    }
+}
+
+internal fun Context.loadAlarmEnabled(): Boolean {
+    return getSharedPreferences(PREFS_KEY, 0)
+        .getBoolean(alarmEnabled(), DEFAULT_ALARM_ENABLED)
 }
 
 internal fun Context.saveCalendarInfo(instance: Instance, info: CalendarInfo) {

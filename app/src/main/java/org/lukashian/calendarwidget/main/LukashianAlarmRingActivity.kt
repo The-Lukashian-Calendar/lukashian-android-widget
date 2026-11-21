@@ -10,24 +10,26 @@ import androidx.appcompat.app.AppCompatActivity
 import org.lukashian.calendarwidget.ACTION_STOP_ALARM_SOUND
 import org.lukashian.calendarwidget.Logger
 import org.lukashian.calendarwidget.REQUEST_CODE_STOP_ALARM_SOUND_FROM_RING_ACTIVITY
+import org.lukashian.calendarwidget.data.loadAlarmBeeps
 import org.lukashian.calendarwidget.databinding.LukashianAlarmRingBinding
 import org.lukashian.calendarwidget.pi
+import org.lukashian.calendarwidget.renderBeeps
 
 class LukashianAlarmRingActivity : AppCompatActivity() {
     private val logger = Logger(LukashianAlarmRingActivity::class)
 
-    private lateinit var binding: LukashianAlarmRingBinding
+    private lateinit var animator: AnimatorSet
 
     override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
 
         logger.info("Alarm Ring Activity Created")
 
-        binding = LukashianAlarmRingBinding.inflate(layoutInflater)
+        val binding = LukashianAlarmRingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //The time of the alarm
-        binding.alarmTime.text = "5000" //TODO: replace with number of currently set alarm
+        binding.alarmTime.text = renderBeeps(applicationContext.loadAlarmBeeps())
 
         //The pulsating dismiss text
         val scaleX = ObjectAnimator.ofFloat(binding.tapToDismiss, "scaleX", 1.0f, 1.3f).apply {
@@ -40,7 +42,7 @@ class LukashianAlarmRingActivity : AppCompatActivity() {
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.REVERSE
         }
-        AnimatorSet().apply {
+        animator = AnimatorSet().apply {
             playTogether(scaleX, scaleY)
             interpolator = AccelerateDecelerateInterpolator()
             start()
@@ -56,5 +58,10 @@ class LukashianAlarmRingActivity : AppCompatActivity() {
             stopSoundPI.send()
             finishAndRemoveTask()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        animator.cancel()
     }
 }

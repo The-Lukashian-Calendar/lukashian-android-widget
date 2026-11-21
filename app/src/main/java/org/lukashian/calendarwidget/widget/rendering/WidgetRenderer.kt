@@ -13,6 +13,7 @@ import org.lukashian.calendarwidget.data.loadIndicator
 import org.lukashian.calendarwidget.data.loadInstance
 import org.lukashian.calendarwidget.data.scheduleCalendarInfoUpdate
 import org.lukashian.calendarwidget.pi
+import org.lukashian.calendarwidget.renderBeeps
 import org.lukashian.calendarwidget.widget.LukashianWidget
 
 private val logger = Logger(WidgetRenderer::class)
@@ -88,7 +89,7 @@ internal fun renderAppWidget(
         logger.debug("day: $day")
         logger.debug("year: $year")
 
-        val beepsString = String.format("%04d", proportionPassed.toInt())
+        val beepsString = renderBeeps(proportionPassed.toInt())
         val dayYearString = "$day - $year"
         val instanceString = if (indicator) "  (${instance.name.lowercase().replaceFirstChar { it.titlecase() }})" else ""
 
