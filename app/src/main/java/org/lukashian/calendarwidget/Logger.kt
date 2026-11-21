@@ -7,7 +7,7 @@ class Logger(private val clazz: KClass<*>) {
 
     companion object {
         private const val DEBUG_ENABLED = false
-        private const val INFO_ENABLED = false
+        private const val INFO_ENABLED = true
     }
 
     fun debug(message: String) {

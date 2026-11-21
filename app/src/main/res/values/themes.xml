@@ -6,7 +6,7 @@
         <item name="android:statusBarColor">?android:attr/windowBackground</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
-    <style name="Theme.LukashianWidgetMain" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.LukashianMain" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBarOverlay">false</item>
         <item name="colorPrimary">@color/darkblue</item>
         <item name="colorPrimaryDark">@color/darkblue</item>

@@ -80,7 +80,7 @@ internal fun scheduleCalendarInfoUpdate(context: Context) {
 
     WorkManager.getInstance(context).enqueueUniqueWork(
         "immediateCalendarInfoUpdate",
-        ExistingWorkPolicy.REPLACE,
+        ExistingWorkPolicy.KEEP, //Don't replace update attempts on slow connections
         immediateUpdate
     )
 
@@ -94,9 +94,4 @@ internal fun scheduleCalendarInfoUpdate(context: Context) {
         ExistingPeriodicWorkPolicy.REPLACE,
         periodicUpdate
     )
-}
-
-internal fun unscheduleCalendarInfoUpdate(context: Context) {
-    logger.info("Unscheduling CalendarInfo update")
-    WorkManager.getInstance(context).cancelAllWorkByTag("periodicCalendarInfoUpdate")
 }
